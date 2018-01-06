@@ -1,5 +1,11 @@
 using EchoviewEvr
 using Base.Test
 
-# write your own tests here
-@test 1 == 2
+filename = joinpath(dirname(@__FILE__),
+                  "data/WCBjr280_1_1_regions.evr")
+
+regions = collect(regions(filename))
+
+@test length(regions) == 68
+@test regions[1].classification == "krills"
+@test regions[1].regiontype == "1"
