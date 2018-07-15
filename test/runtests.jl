@@ -8,8 +8,8 @@ end
 filename = joinpath(dirname(@__FILE__),
                   "data/WCBjr280_1_1_regions.evr")
 
-regions = collect(regions(filename))
+_regions = collect(regions(filename))
 
-@test length(regions) == 68
-@test regions[1].classification == "krills"
-@test regions[1].regiontype == "1"
+@test length(_regions) == 68
+@test _regions[1].classification == "krills"
+@test _regions[1].regiontype == "1"
