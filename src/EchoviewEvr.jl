@@ -1,7 +1,9 @@
 __precompile__()
 module EchoviewEvr
 
-export regions
+using Filetimes
+
+export regions, polygon, polygons
 
 """
 An Echoview region.
@@ -134,6 +136,40 @@ function regions(filenames::Vector{String})
     end
 
     return Channel(_it, ctype=Region)
+end
+
+function makefiletime(date, time)
+
+    CCYY = parse(Int,date[1:4])
+    MM = parse(Int, date[5:6])
+    DD = parse(Int, date[7:8])
+
+    HH = parse(Int, time[1:2])
+    mm = parse(Int, time[3:4])
+    SS = parse(Int, time[5:6])
+
+    ssss = parse(Int, time[7:10]) / 10
+
+    d = DateTime(CCYY, MM, DD, HH, mm, SS)
+
+    ft = Filetimes.filetime(d)
+
+    ft = ft + ssss *10000
+end
+
+function polygon(region::Region)
+    p = region.points
+    d = p[1:3:end]
+    t = p[2:3:end]
+    y = parse.(Float64,p[3:3:end])
+
+    x = makefiletime.(d,t)
+
+    return x,y
+end
+
+function polygons(x)
+    polygon.(collect(regions(x)))
 end
 
 end # module
