@@ -148,7 +148,7 @@ function makefiletime(date, time)
     mm = parse(Int, time[3:4])
     SS = parse(Int, time[5:6])
 
-    ssss = parse(Int, time[7:10]) / 10
+    ssss = div(parse(Int, time[7:10]), 10)
 
     d = DateTime(CCYY, MM, DD, HH, mm, SS)
 
@@ -168,8 +168,13 @@ function polygon(region::Region)
     return x,y
 end
 
+function polygons(ps::Vector{Region})
+    polygon.(ps)
+end
+
+                  
 function polygons(x)
-    polygon.(collect(regions(x)))
+    polygons(collect(regions(x)))
 end
 
 end # module
