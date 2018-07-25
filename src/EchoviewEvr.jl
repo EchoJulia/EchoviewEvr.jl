@@ -112,12 +112,21 @@ end
 file.
 
 """
-function regions(filename::String)
+function regions(filename::AbstractString)
     regions([filename])
 end
 
 """
-    regions(filenames::Vector{AbstractString})
+    load(filename::AbstractString)
+
+Loads an Echoview region file.
+"""
+function load(filename::AbstractString)
+    collect(regions([filename]))
+end
+
+"""
+    regions(filenames::Vector{String})
 
 `regions` returns an iterator over regions in the given Echoview EVR
 files.
